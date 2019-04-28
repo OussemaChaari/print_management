@@ -1,0 +1,45 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-teaching-heading">Create or edit a Teaching</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!teaching.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="teaching.id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_subject">Subject</label>
+                    <select class="form-control" id="field_subject" name="subject" [(ngModel)]="teaching.subject" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="subjectOption.id === teaching.subject?.id ? teaching.subject : subjectOption" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_teacher">Teacher</label>
+                    <select class="form-control" id="field_teacher" name="teacher" [(ngModel)]="teaching.teacher" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="teacherOption.id === teaching.teacher?.id ? teaching.teacher : teacherOption" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.id}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_group">Group</label>
+                    <select class="form-control" id="field_group" name="group" [(ngModel)]="teaching.group" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="groupOption.id === teaching.group?.id ? teaching.group : groupOption" *ngFor="let groupOption of groups; trackBy: trackGroupById">{{groupOption.id}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

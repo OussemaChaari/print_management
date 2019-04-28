@@ -13,12 +13,12 @@ h4 {
 }
 
 a {
-    color: #533f03;
+    color: #0a95ad;
     font-weight: bold;
 }
 
 a:hover {
-    color: #533f03;
+    color: #13e2e2;
     font-weight: bold;
     /* make sure browsers use the pointer cursor for anchors, even with no href */
     cursor: pointer;
@@ -84,7 +84,9 @@ Generic styles
 }
 
 .footer {
-    border-top: 1px solid rgba(0, 0, 0, 0.125);
+    position: absolute;
+    left: calc(50% - 86px);
+    bottom: 0;
 }
 
 .hand,

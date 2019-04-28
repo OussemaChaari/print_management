@@ -1,0 +1,35 @@
+{
+    "name": "Employee",
+    "fields": [
+        {
+            "fieldName": "printsNumber",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "user",
+            "otherEntityRelationshipName": "employee",
+            "relationshipName": "user",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "printOrder",
+            "otherEntityRelationshipName": "employee",
+            "relationshipName": "printOrder"
+        }
+    ],
+    "changelogDate": "20190428201400",
+    "javadoc": "The Employee entity.\n@author A true hipster",
+    "entityTableName": "employee",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,76 @@
+<div>
+    <h2 id="page-heading">
+        <span>Print Orders</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-print-order" [routerLink]="['/print-order/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Print Order
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="printOrders">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Creation Date</span></th>
+            <th><span>Recieving Date</span></th>
+            <th><span>Status</span></th>
+            <th><span>Document</span></th>
+            <th><span>Teaching</span></th>
+            <th><span>Employee</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let printOrder of printOrders ;trackBy: trackId">
+                <td><a [routerLink]="['/print-order', printOrder.id, 'view' ]">{{printOrder.id}}</a></td>
+                <td>{{printOrder.creationDate | date:'medium'}}</td>
+                <td>{{printOrder.recievingDate | date:'medium'}}</td>
+                <td>{{printOrder.status}}</td>
+                <td>
+                    <div *ngIf="printOrder.document">
+                        <a [routerLink]="['../document', printOrder.document?.id, 'view' ]" >{{printOrder.document?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="printOrder.teaching">
+                        <a [routerLink]="['../teaching', printOrder.teaching?.id, 'view' ]" >{{printOrder.teaching?.id}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="printOrder.employee">
+                        <a [routerLink]="['../employee', printOrder.employee?.id, 'view' ]" >{{printOrder.employee?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/print-order', printOrder.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/print-order', printOrder.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', 'print-order', { outlets: { popup: printOrder.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

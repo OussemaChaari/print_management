@@ -17,24 +17,26 @@ import java.time.Instant;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findOneByActivationKey(String activationKey);
+	Optional<User> findOneByActivationKey(String activationKey);
 
-    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);
+	List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);
 
-    Optional<User> findOneByResetKey(String resetKey);
+	Optional<User> findOneByResetKey(String resetKey);
 
-    Optional<User> findOneByEmailIgnoreCase(String email);
+	Optional<User> findOneByEmailIgnoreCase(String email);
 
-    Optional<User> findOneByLogin(String login);
+	Optional<User> findOneByLogin(String login);
 
-    @EntityGraph(attributePaths = "authorities")
-    Optional<User> findOneWithAuthoritiesById(Long id);
+	User findUserById(Long id);
 
-    @EntityGraph(attributePaths = "authorities")
-    Optional<User> findOneWithAuthoritiesByLogin(String login);
+	@EntityGraph(attributePaths = "authorities")
+	Optional<User> findOneWithAuthoritiesById(Long id);
 
-    @EntityGraph(attributePaths = "authorities")
-    Optional<User> findOneWithAuthoritiesByEmail(String email);
+	@EntityGraph(attributePaths = "authorities")
+	Optional<User> findOneWithAuthoritiesByLogin(String login);
 
-    Page<User> findAllByLoginNot(Pageable pageable, String login);
+	@EntityGraph(attributePaths = "authorities")
+	Optional<User> findOneWithAuthoritiesByEmail(String email);
+
+	Page<User> findAllByLoginNot(Pageable pageable, String login);
 }

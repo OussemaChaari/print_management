@@ -60,6 +60,11 @@ management:
                 auto-time-requests: true
 
 spring:
+    servlet:
+        multipart:
+            enabled: true
+    file:
+        upload-dir: /home/lommja/Desktop/print_management/uploads
     application:
         name: print_management
     profiles:
