@@ -33,7 +33,7 @@ export const employeeRoute: Routes = [
         path: '',
         component: EmployeeComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Employees'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const employeeRoute: Routes = [
             employee: EmployeeResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Employees'
         },
         canActivate: [UserRouteAccessService]
@@ -57,7 +57,7 @@ export const employeeRoute: Routes = [
             employee: EmployeeResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Employees'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const employeeRoute: Routes = [
             employee: EmployeeResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Employees'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const employeePopupRoute: Routes = [
             employee: EmployeeResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Employees'
         },
         canActivate: [UserRouteAccessService],

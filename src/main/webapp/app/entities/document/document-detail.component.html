@@ -12,7 +12,7 @@
                 <dt><span>File</span></dt>
                 <dd>
                     <div *ngIf="document.file">
-                        <a (click)="openFile(document.fileContentType, document.file)">open</a>
+                        <a (click)="openFile()">open</a>
                         {{document.fileContentType}}, {{byteSize(document.file)}}
                     </div>
                 </dd>

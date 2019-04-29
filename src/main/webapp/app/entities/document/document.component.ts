@@ -23,7 +23,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
         protected dataUtils: JhiDataUtils,
         protected eventManager: JhiEventManager,
         protected accountService: AccountService
-    ) {}
+    ) { }
 
     loadAll() {
         this.documentService
@@ -60,8 +60,13 @@ export class DocumentComponent implements OnInit, OnDestroy {
         return this.dataUtils.byteSize(field);
     }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
+    openFile(document) {
+        this.documentService.getFile(document.id).subscribe((res: any) => {
+            console.log(res);
+            const file = new Blob([res], { type: 'application/pdf' });
+            const downloadURL = window.URL.createObjectURL(file);
+            window.open(downloadURL);
+        });
     }
 
     registerChangeInDocuments() {

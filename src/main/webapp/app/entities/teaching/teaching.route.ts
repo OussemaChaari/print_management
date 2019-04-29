@@ -33,7 +33,7 @@ export const teachingRoute: Routes = [
         path: '',
         component: TeachingComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Teachings'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const teachingRoute: Routes = [
             teaching: TeachingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Teachings'
         },
         canActivate: [UserRouteAccessService]
@@ -57,7 +57,7 @@ export const teachingRoute: Routes = [
             teaching: TeachingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Teachings'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const teachingRoute: Routes = [
             teaching: TeachingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Teachings'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const teachingPopupRoute: Routes = [
             teaching: TeachingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Teachings'
         },
         canActivate: [UserRouteAccessService],

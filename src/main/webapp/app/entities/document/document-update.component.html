@@ -24,7 +24,7 @@
                     <label class="form-control-label" for="field_file">File</label>
                     <div>
                         <div *ngIf="document.file" class="form-text text-danger clearfix">
-                            <a class="pull-left" (click)="openFile(document.fileContentType, document.file)">open</a><br>
+                            <a class="pull-left" (click)="openFile()">open</a><br>
                             <span class="pull-left">{{document.fileContentType}}, {{byteSize(document.file)}}</span>
                             <button type="button" (click)="document.file=null;document.fileContentType=null;"
                                     class="btn btn-secondary btn-xs pull-right">

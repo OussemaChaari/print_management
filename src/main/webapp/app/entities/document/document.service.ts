@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IDocument } from 'app/shared/model/document.model';
+import { cpus } from 'os';
 
 type EntityResponseType = HttpResponse<IDocument>;
 type EntityArrayResponseType = HttpResponse<IDocument[]>;
@@ -13,7 +14,7 @@ type EntityArrayResponseType = HttpResponse<IDocument[]>;
 export class DocumentService {
     public resourceUrl = SERVER_API_URL + 'api/documents';
 
-    constructor(protected http: HttpClient) {}
+    constructor(protected http: HttpClient) { }
 
     create(document: IDocument): Observable<EntityResponseType> {
         return this.http.post<IDocument>(this.resourceUrl, document, { observe: 'response' });
@@ -30,6 +31,12 @@ export class DocumentService {
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<IDocument[]>(this.resourceUrl, { params: options, observe: 'response' });
+    }
+
+    getFile(id) {
+        return this.http.get(this.resourceUrl + `/${id}/file`, {
+            responseType: 'blob'
+        });
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

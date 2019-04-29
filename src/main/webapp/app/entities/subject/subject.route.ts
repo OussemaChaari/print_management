@@ -33,7 +33,7 @@ export const subjectRoute: Routes = [
         path: '',
         component: SubjectComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Subjects'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const subjectRoute: Routes = [
             subject: SubjectResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Subjects'
         },
         canActivate: [UserRouteAccessService]
@@ -57,7 +57,7 @@ export const subjectRoute: Routes = [
             subject: SubjectResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Subjects'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const subjectRoute: Routes = [
             subject: SubjectResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Subjects'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const subjectPopupRoute: Routes = [
             subject: SubjectResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Subjects'
         },
         canActivate: [UserRouteAccessService],

@@ -6,36 +6,19 @@
                 <jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!printOrder.id">
                     <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="printOrder.id" readonly />
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_creationDate">Creation Date</label>
-                    <div class="d-flex">
-                        <input id="field_creationDate" type="datetime-local" class="form-control" name="creationDate" [(ngModel)]="creationDate" placeholder="YYYY-MM-DD HH:mm"
-                        required/>
-                    </div>
-                    <div [hidden]="!(editForm.controls.creationDate?.dirty && editForm.controls.creationDate?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.creationDate?.errors?.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.creationDate?.errors?.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>
-                    </div>
+                    <input type="text" class="form-control" id="id" name="id" [(ngModel)]="printOrder.id" readonly />
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_recievingDate">Recieving Date</label>
                     <div class="d-flex">
-                        <input id="field_recievingDate" type="datetime-local" class="form-control" name="recievingDate" [(ngModel)]="recievingDate" placeholder="YYYY-MM-DD HH:mm"
-                        required/>
+                        <input id="field_recievingDate" type="datetime-local" class="form-control" name="recievingDate"
+                            [(ngModel)]="recievingDate" placeholder="YYYY-MM-DD HH:mm" required />
                     </div>
-                    <div [hidden]="!(editForm.controls.recievingDate?.dirty && editForm.controls.recievingDate?.invalid)">
+                    <div
+                        [hidden]="!(editForm.controls.recievingDate?.dirty && editForm.controls.recievingDate?.invalid)">
                         <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.recievingDate?.errors?.required">
-                        This field is required.
+                            [hidden]="!editForm.controls.recievingDate?.errors?.required">
+                            This field is required.
                         </small>
                         <small class="form-text text-danger"
                             [hidden]="!editForm.controls.recievingDate?.errors?.ZonedDateTimelocal">
@@ -43,48 +26,34 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_status">Status</label>
-                    <select class="form-control" name="status" [(ngModel)]="printOrder.status" id="field_status"  required>
-                        <option value="INPROGRESS">INPROGRESS</option>
-                        <option value="PENDING">PENDING</option>
-                        <option value="DONE">DONE</option>
-                    </select>
-                    <div [hidden]="!(editForm.controls.status?.dirty && editForm.controls.status?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.status?.errors?.required">
-                        This field is required.
-                        </small>
+
+                <div class="form-inline my-3">
+                    <div class="form-group">
+                        <label class="form-control-label mr-2" for="field_document">Document</label>
+                        <select class="form-control" id="field_document" name="document"
+                            [(ngModel)]="printOrder.document">
+                            <option [ngValue]="null"></option>
+                            <option
+                                [ngValue]="documentOption.id === printOrder.document?.id ? printOrder.document : documentOption"
+                                *ngFor="let documentOption of documents; trackBy: trackDocumentById">
+                                {{documentOption.file}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="ml-auto form-group">
+                        <button type="button" (click)="openAddDocument()" class="btn btn-outline-success">
+                            <fa-icon [icon]="'plus'"></fa-icon>
+                        </button>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="form-control-label" for="field_document">Document</label>
-                    <select class="form-control" id="field_document" name="document" [(ngModel)]="printOrder.document">
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="documentOption.id === printOrder.document?.id ? printOrder.document : documentOption" *ngFor="let documentOption of documents; trackBy: trackDocumentById">{{documentOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_teaching">Teaching</label>
-                    <select class="form-control" id="field_teaching" name="teaching" [(ngModel)]="printOrder.teaching" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="teachingOption.id === printOrder.teaching?.id ? printOrder.teaching : teachingOption" *ngFor="let teachingOption of teachings; trackBy: trackTeachingById">{{teachingOption.id}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_employee">Employee</label>
-                    <select class="form-control" id="field_employee" name="employee" [(ngModel)]="printOrder.employee" >
-                        <option [ngValue]="null"></option>
-                        <option [ngValue]="employeeOption.id === printOrder.employee?.id ? printOrder.employee : employeeOption" *ngFor="let employeeOption of employees; trackBy: trackEmployeeById">{{employeeOption.id}}</option>
-                    </select>
-                </div>
             </div>
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving"
+                    class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
                 </button>
             </div>

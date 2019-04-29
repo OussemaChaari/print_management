@@ -11,6 +11,7 @@ import {
     printOrderRoute,
     printOrderPopupRoute
 } from './';
+import { AddDocumentModalComponent } from './add-document-modal/add-document-modal.component';
 
 const ENTITY_STATES = [...printOrderRoute, ...printOrderPopupRoute];
 
@@ -21,9 +22,10 @@ const ENTITY_STATES = [...printOrderRoute, ...printOrderPopupRoute];
         PrintOrderDetailComponent,
         PrintOrderUpdateComponent,
         PrintOrderDeleteDialogComponent,
-        PrintOrderDeletePopupComponent
+        PrintOrderDeletePopupComponent,
+        AddDocumentModalComponent
     ],
-    entryComponents: [PrintOrderComponent, PrintOrderUpdateComponent, PrintOrderDeleteDialogComponent, PrintOrderDeletePopupComponent],
+    entryComponents: [PrintOrderComponent, PrintOrderUpdateComponent, PrintOrderDeleteDialogComponent, PrintOrderDeletePopupComponent, AddDocumentModalComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class PrintManagementPrintOrderModule {}

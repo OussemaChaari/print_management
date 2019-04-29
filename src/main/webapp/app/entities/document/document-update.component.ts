@@ -1,10 +1,9 @@
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { JhiDataUtils } from 'ng-jhipster';
 import { IDocument } from 'app/shared/model/document.model';
+import { JhiDataUtils } from 'ng-jhipster';
+import { Observable } from 'rxjs';
 import { DocumentService } from './document.service';
 
 @Component({
@@ -28,8 +27,13 @@ export class DocumentUpdateComponent implements OnInit {
         return this.dataUtils.byteSize(field);
     }
 
-    openFile(contentType, field) {
-        return this.dataUtils.openFile(contentType, field);
+    openFile() {
+        this.documentService.getFile(this.document.id).subscribe((res: any) => {
+            console.log(res);
+            const file = new Blob([res], { type: 'application/pdf' });
+            const downloadURL = window.URL.createObjectURL(file);
+            window.open(downloadURL);
+        });
     }
 
     setFileData(event, entity, field, isImage) {

@@ -12,7 +12,6 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * A Document.
@@ -33,7 +32,7 @@ public class Document implements Serializable {
 
 	@Lob
 	@Column(name = "jhi_file", nullable = false)
-	private MultipartFile file;
+	private String file;
 
 	@Column(name = "jhi_file_content_type", nullable = false)
 	private String fileContentType;
@@ -61,16 +60,16 @@ public class Document implements Serializable {
 		this.title = title;
 	}
 
-	public MultipartFile getFile() {
+	public String getFile() {
 		return file;
 	}
 
-	public Document file(MultipartFile file) {
+	public Document file(String file) {
 		this.file = file;
 		return this;
 	}
 
-	public void setFile(MultipartFile file) {
+	public void setFile(String file) {
 		this.file = file;
 	}
 

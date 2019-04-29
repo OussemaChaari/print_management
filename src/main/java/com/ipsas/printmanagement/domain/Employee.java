@@ -29,11 +29,11 @@ public class Employee implements Serializable {
     @Column(name = "prints_number")
     private Integer printsNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee",cascade = CascadeType.REMOVE)
     private Set<PrintOrder> printOrders = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {

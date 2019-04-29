@@ -33,7 +33,7 @@ export const groupRoute: Routes = [
         path: '',
         component: GroupComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Groups'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const groupRoute: Routes = [
             group: GroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Groups'
         },
         canActivate: [UserRouteAccessService]
@@ -57,7 +57,7 @@ export const groupRoute: Routes = [
             group: GroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Groups'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const groupRoute: Routes = [
             group: GroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Groups'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const groupPopupRoute: Routes = [
             group: GroupResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'Groups'
         },
         canActivate: [UserRouteAccessService],

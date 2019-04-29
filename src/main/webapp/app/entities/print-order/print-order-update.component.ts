@@ -14,6 +14,8 @@ import { ITeaching } from 'app/shared/model/teaching.model';
 import { TeachingService } from 'app/entities/teaching';
 import { IEmployee } from 'app/shared/model/employee.model';
 import { EmployeeService } from 'app/entities/employee';
+import { AddDocumentModalComponent } from './add-document-modal/add-document-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'jhi-print-order-update',
@@ -37,8 +39,9 @@ export class PrintOrderUpdateComponent implements OnInit {
         protected documentService: DocumentService,
         protected teachingService: TeachingService,
         protected employeeService: EmployeeService,
-        protected activatedRoute: ActivatedRoute
-    ) {}
+        protected activatedRoute: ActivatedRoute,
+        private modalService: NgbModal
+    ) { }
 
     ngOnInit() {
         this.isSaving = false;
@@ -47,6 +50,25 @@ export class PrintOrderUpdateComponent implements OnInit {
             this.creationDate = this.printOrder.creationDate != null ? this.printOrder.creationDate.format(DATE_TIME_FORMAT) : null;
             this.recievingDate = this.printOrder.recievingDate != null ? this.printOrder.recievingDate.format(DATE_TIME_FORMAT) : null;
         });
+        this.fetchDocuments();
+        this.teachingService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<ITeaching[]>) => mayBeOk.ok),
+                map((response: HttpResponse<ITeaching[]>) => response.body)
+            )
+            .subscribe((res: ITeaching[]) => (this.teachings = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.employeeService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IEmployee[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IEmployee[]>) => response.body)
+            )
+            .subscribe((res: IEmployee[]) => (this.employees = res), (res: HttpErrorResponse) => this.onError(res.message));
+    }
+
+    fetchDocuments() {
+        console.log('fetching....');
         this.documentService
             .query({ filter: 'printorder-is-null' })
             .pipe(
@@ -72,20 +94,6 @@ export class PrintOrderUpdateComponent implements OnInit {
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
-        this.teachingService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<ITeaching[]>) => mayBeOk.ok),
-                map((response: HttpResponse<ITeaching[]>) => response.body)
-            )
-            .subscribe((res: ITeaching[]) => (this.teachings = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.employeeService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IEmployee[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IEmployee[]>) => response.body)
-            )
-            .subscribe((res: IEmployee[]) => (this.employees = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -101,6 +109,15 @@ export class PrintOrderUpdateComponent implements OnInit {
         } else {
             this.subscribeToSaveResponse(this.printOrderService.create(this.printOrder));
         }
+    }
+
+    openAddDocument() {
+        const modalRef = this.modalService.open(AddDocumentModalComponent);
+        modalRef.componentInstance.result.subscribe(res => {
+            if (res === 'success') {
+                this.fetchDocuments();
+            }
+        });
     }
 
     protected subscribeToSaveResponse(result: Observable<HttpResponse<IPrintOrder>>) {

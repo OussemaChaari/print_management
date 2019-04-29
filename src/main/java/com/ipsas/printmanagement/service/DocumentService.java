@@ -18,6 +18,8 @@ public interface DocumentService {
      */
     Document save(Document document);
 
+
+    String storeFile(Document document);
     /**
      * Get all the documents.
      *

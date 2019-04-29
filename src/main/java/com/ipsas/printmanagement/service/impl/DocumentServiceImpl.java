@@ -1,14 +1,17 @@
 package com.ipsas.printmanagement.service.impl;
 
-import com.ipsas.printmanagement.service.DocumentService;
 import com.ipsas.printmanagement.domain.Document;
 import com.ipsas.printmanagement.repository.DocumentRepository;
+import com.ipsas.printmanagement.service.DocumentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.FileOutputStream;
+import java.sql.Timestamp;
+import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +40,25 @@ public class DocumentServiceImpl implements DocumentService {
     public Document save(Document document) {
         log.debug("Request to save Document : {}", document);
         return documentRepository.save(document);
+    }
+
+    @Override
+    public String storeFile(Document document) {
+        {
+            try {
+                //This will decode the String which is encoded by using Base64 class
+                byte[] imageByte = Base64.getDecoder().decode(document.getFile());
+                Timestamp ts = new Timestamp(new Date().getTime());
+                String fileName = document.getTitle() + ts;
+                String directory = "/home/lommja/Desktop/print_management/uploads/" + fileName + ".pdf";
+                new FileOutputStream(directory).write(imageByte);
+                return fileName;
+            } catch (Exception e) {
+                log.error("error = " + e);
+                return null;
+            }
+
+        }
     }
 
     /**

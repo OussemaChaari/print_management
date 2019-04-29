@@ -33,7 +33,7 @@ export const printOrderRoute: Routes = [
         path: '',
         component: PrintOrderComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'PrintOrders'
         },
         canActivate: [UserRouteAccessService]
@@ -45,7 +45,7 @@ export const printOrderRoute: Routes = [
             printOrder: PrintOrderResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'PrintOrders'
         },
         canActivate: [UserRouteAccessService]
@@ -57,7 +57,7 @@ export const printOrderRoute: Routes = [
             printOrder: PrintOrderResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'PrintOrders'
         },
         canActivate: [UserRouteAccessService]
@@ -69,7 +69,7 @@ export const printOrderRoute: Routes = [
             printOrder: PrintOrderResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'PrintOrders'
         },
         canActivate: [UserRouteAccessService]
@@ -84,7 +84,7 @@ export const printOrderPopupRoute: Routes = [
             printOrder: PrintOrderResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_USER','ROLE_TEACHER','ROLE_EMPLOYEE'],
             pageTitle: 'PrintOrders'
         },
         canActivate: [UserRouteAccessService],
