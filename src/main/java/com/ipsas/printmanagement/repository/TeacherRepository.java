@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
-
+    Teacher findTeacherByUserId(Long userId);
 }

@@ -13,7 +13,7 @@ type EntityArrayResponseType = HttpResponse<ISubject[]>;
 export class SubjectService {
     public resourceUrl = SERVER_API_URL + 'api/subjects';
 
-    constructor(protected http: HttpClient) {}
+    constructor(protected http: HttpClient) { }
 
     create(subject: ISubject): Observable<EntityResponseType> {
         return this.http.post<ISubject>(this.resourceUrl, subject, { observe: 'response' });
@@ -30,6 +30,10 @@ export class SubjectService {
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http.get<ISubject[]>(this.resourceUrl, { params: options, observe: 'response' });
+    }
+
+    findByTeacherAndGroup(teacherId, groupId) {
+        return this.http.get(`${this.resourceUrl}/${teacherId}/${groupId}`);
     }
 
     delete(id: number): Observable<HttpResponse<any>> {

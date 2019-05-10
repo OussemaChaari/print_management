@@ -1,11 +1,14 @@
 package com.ipsas.printmanagement.web.rest;
+
 import com.ipsas.printmanagement.domain.Teacher;
+import com.ipsas.printmanagement.repository.TeacherRepository;
 import com.ipsas.printmanagement.service.TeacherService;
 import com.ipsas.printmanagement.web.rest.errors.BadRequestAlertException;
 import com.ipsas.printmanagement.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -94,6 +97,15 @@ public class TeacherResource {
         log.debug("REST request to get Teacher : {}", id);
         Optional<Teacher> teacher = teacherService.findOne(id);
         return ResponseUtil.wrapOrNotFound(teacher);
+    }
+
+    @Autowired
+    TeacherRepository teacherRepository;
+
+    @GetMapping("/teachers/user/{id}")
+    public Teacher getTeacherByUserId(@PathVariable Long id) {
+        Teacher teacher = teacherRepository.findTeacherByUserId(id);
+        return teacher;
     }
 
     /**

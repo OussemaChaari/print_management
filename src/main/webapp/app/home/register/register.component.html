@@ -7,7 +7,8 @@
                 <strong>Registration saved!</strong> Please check your email for confirmation.
             </div>
 
-            <div class="alert alert-danger" *ngIf="error"><strong>Registration failed!</strong> Please try again later.</div>
+            <div class="alert alert-danger" *ngIf="error"><strong>Registration failed!</strong> Please try again later.
+            </div>
 
             <div class="alert alert-danger" *ngIf="errorUserExists">
                 <strong>Login name already registered!</strong> Please choose another one.
@@ -27,19 +28,9 @@
             <form name="form" role="form" (ngSubmit)="register()" #registerForm="ngForm" *ngIf="!success">
                 <div class="form-group">
                     <label class="form-control-label" for="login">Username</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        [(ngModel)]="registerAccount.login"
-                        id="login"
-                        name="login"
-                        #login="ngModel"
-                        placeholder="Your username"
-                        required
-                        minlength="1"
-                        maxlength="50"
-                        pattern="^[_.@A-Za-z0-9-]*$"
-                    />
+                    <input type="text" class="form-control" [(ngModel)]="registerAccount.login" id="login" name="login"
+                        #login="ngModel" placeholder="Your username" required minlength="1" maxlength="50"
+                        pattern="^[_.@A-Za-z0-9-]*$" />
                     <div *ngIf="login.dirty && login.invalid">
                         <small class="form-text text-danger" *ngIf="login.errors.required">
                             Your username is required.
@@ -56,20 +47,20 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" for="fName">First name</label>
+                    <input type="text" class="form-control" id="fName" name="fName" placeholder="First name"
+                        [(ngModel)]="registerAccount.firstName" minlength="4" maxlength="50" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="lName">Last name</label>
+                    <input type="text" class="form-control" id="lName" name="lName" placeholder="Last name"
+                        [(ngModel)]="registerAccount.lastName" minlength="4" maxlength="50" required />
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" for="email">Email</label>
-                    <input
-                        type="email"
-                        class="form-control"
-                        id="email"
-                        name="email"
-                        #email="ngModel"
-                        placeholder="Your email"
-                        [(ngModel)]="registerAccount.email"
-                        minlength="5"
-                        maxlength="254"
-                        email
-                        required
-                    />
+                    <input type="email" class="form-control" id="email" name="email" #email="ngModel"
+                        placeholder="Your email" [(ngModel)]="registerAccount.email" minlength="5" maxlength="254" email
+                        required />
                     <div *ngIf="email.dirty && email.invalid">
                         <small class="form-text text-danger" *ngIf="email.errors.required">
                             Your email is required.
@@ -87,18 +78,9 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="password">New password</label>
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="password"
-                        name="password"
-                        #password="ngModel"
-                        placeholder="New password"
-                        [(ngModel)]="registerAccount.password"
-                        minlength="4"
-                        maxlength="50"
-                        required
-                    />
+                    <input type="password" class="form-control" id="password" name="password" #password="ngModel"
+                        placeholder="New password" [(ngModel)]="registerAccount.password" minlength="4" maxlength="50"
+                        required />
                     <div *ngIf="password.dirty && password.invalid">
                         <small class="form-text text-danger" *ngIf="password.errors.required">
                             Your password is required.
@@ -114,18 +96,9 @@
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="confirmPassword">New password confirmation</label>
-                    <input
-                        type="password"
-                        class="form-control"
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        #confirmPasswordInput="ngModel"
-                        placeholder="Confirm the new password"
-                        [(ngModel)]="confirmPassword"
-                        minlength="4"
-                        maxlength="50"
-                        required
-                    />
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                        #confirmPasswordInput="ngModel" placeholder="Confirm the new password"
+                        [(ngModel)]="confirmPassword" minlength="4" maxlength="50" required />
                     <div *ngIf="confirmPasswordInput.dirty && confirmPasswordInput.invalid">
                         <small class="form-text text-danger" *ngIf="confirmPasswordInput.errors.required">
                             Your confirmation password is required.

@@ -1,11 +1,15 @@
 package com.ipsas.printmanagement.web.rest;
 import com.ipsas.printmanagement.domain.Employee;
+import com.ipsas.printmanagement.domain.Teacher;
+import com.ipsas.printmanagement.repository.EmployeeRepository;
+import com.ipsas.printmanagement.repository.TeacherRepository;
 import com.ipsas.printmanagement.service.EmployeeService;
 import com.ipsas.printmanagement.web.rest.errors.BadRequestAlertException;
 import com.ipsas.printmanagement.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +53,15 @@ public class EmployeeResource {
         return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @GetMapping("/employees/user/{id}")
+    public Employee getEmployeeByUserId(@PathVariable Long id) {
+        Employee employee = employeeRepository.findEmployeeByUserId(id);
+        return employee;
     }
 
     /**

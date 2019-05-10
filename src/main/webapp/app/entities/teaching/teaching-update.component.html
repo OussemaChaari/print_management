@@ -14,21 +14,21 @@
                     <label class="form-control-label" for="field_subject">Subject</label>
                     <select class="form-control" id="field_subject" name="subject" [(ngModel)]="teaching.subject" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="subjectOption.id === teaching.subject?.id ? teaching.subject : subjectOption" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.id}}</option>
+                        <option [ngValue]="subjectOption.id === teaching.subject?.id ? teaching.subject : subjectOption" *ngFor="let subjectOption of subjects; trackBy: trackSubjectById">{{subjectOption.name}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_teacher">Teacher</label>
                     <select class="form-control" id="field_teacher" name="teacher" [(ngModel)]="teaching.teacher" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="teacherOption.id === teaching.teacher?.id ? teaching.teacher : teacherOption" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.id}}</option>
+                        <option [ngValue]="teacherOption.id === teaching.teacher?.id ? teaching.teacher : teacherOption" *ngFor="let teacherOption of teachers; trackBy: trackTeacherById">{{teacherOption.user.firstName}} {{teacherOption.user.firstName}}</option>
                     </select>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_group">Group</label>
                     <select class="form-control" id="field_group" name="group" [(ngModel)]="teaching.group" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="groupOption.id === teaching.group?.id ? teaching.group : groupOption" *ngFor="let groupOption of groups; trackBy: trackGroupById">{{groupOption.id}}</option>
+                        <option [ngValue]="groupOption.id === teaching.group?.id ? teaching.group : groupOption" *ngFor="let groupOption of groups; trackBy: trackGroupById">{{groupOption.name}}</option>
                     </select>
                 </div>
             </div>

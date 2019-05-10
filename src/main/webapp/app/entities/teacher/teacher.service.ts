@@ -13,7 +13,7 @@ type EntityArrayResponseType = HttpResponse<ITeacher[]>;
 export class TeacherService {
     public resourceUrl = SERVER_API_URL + 'api/teachers';
 
-    constructor(protected http: HttpClient) {}
+    constructor(protected http: HttpClient) { }
 
     create(teacher: ITeacher): Observable<EntityResponseType> {
         return this.http.post<ITeacher>(this.resourceUrl, teacher, { observe: 'response' });
@@ -25,6 +25,10 @@ export class TeacherService {
 
     find(id: number): Observable<EntityResponseType> {
         return this.http.get<ITeacher>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    findByUserId(id: number) {
+        return this.http.get(`${this.resourceUrl}/user/${id}`);
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {

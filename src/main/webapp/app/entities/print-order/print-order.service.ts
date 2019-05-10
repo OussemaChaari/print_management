@@ -14,9 +14,11 @@ type EntityArrayResponseType = HttpResponse<IPrintOrder[]>;
 
 @Injectable({ providedIn: 'root' })
 export class PrintOrderService {
+
+
     public resourceUrl = SERVER_API_URL + 'api/print-orders';
 
-    constructor(protected http: HttpClient) {}
+    constructor(protected http: HttpClient) { }
 
     create(printOrder: IPrintOrder): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(printOrder);
@@ -30,6 +32,18 @@ export class PrintOrderService {
         return this.http
             .put<IPrintOrder>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+    }
+
+    updateStatus(id: any, status: any) {
+        return this.http.put(`${this.resourceUrl}/updateStatus`, { id, status }, {
+            responseType: 'text'
+        });
+    }
+
+    claimPrintOrder(id: any, employeeId) {
+        return this.http.get(`${this.resourceUrl}/claim/${id}/${employeeId}`,{
+            responseType: 'text'
+        });
     }
 
     find(id: number): Observable<EntityResponseType> {

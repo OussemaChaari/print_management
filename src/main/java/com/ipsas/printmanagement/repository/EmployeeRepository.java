@@ -1,6 +1,7 @@
 package com.ipsas.printmanagement.repository;
 
 import com.ipsas.printmanagement.domain.Employee;
+import com.ipsas.printmanagement.domain.Teacher;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,6 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-
+    Employee findEmployeeByUserId(Long userId);
+    Employee findEmployeeById(Long id);
 }

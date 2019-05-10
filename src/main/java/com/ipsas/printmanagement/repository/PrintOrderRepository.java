@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface PrintOrderRepository extends JpaRepository<PrintOrder, Long> {
-
+    PrintOrder findPrintOrderById(Long id);
 }

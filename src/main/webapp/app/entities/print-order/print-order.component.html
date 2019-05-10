@@ -2,7 +2,7 @@
     <h2 id="page-heading">
         <span>Print Orders</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-print-order"
-            [routerLink]="['/print-order/new']">
+            [routerLink]="['/print-order/new']" *ngIf="user.authorities.includes('ROLE_TEACHER')">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span>
                 Create new Print Order
@@ -11,7 +11,7 @@
     </h2>
     <jhi-alert></jhi-alert>
     <br />
-    <div class="table-responsive" *ngIf="printOrders">
+    <div class="" *ngIf="printOrders">
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -19,12 +19,16 @@
                     <th><span>Recieving Date</span></th>
                     <th><span>Document</span></th>
                     <th><span>Employee</span></th>
-                    <th></th>
+                    <th><span>Teacher</span></th>
+                    <th><span>Group</span></th>
+                    <th><span>Copies</span></th>
+                    <th><span>Subject</span></th>
+                    <th><span>Status</span></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let printOrder of printOrders ;trackBy: trackId">
-                    <td><a [routerLink]="['/print-order', printOrder.id, 'view' ]">{{printOrder.id}}</a></td>
+                    <td><a [routerLink]="['/print-order', printOrder?.id, 'view' ]">{{printOrder?.id}}</a></td>
                     <td>{{printOrder.recievingDate | date:'medium'}}</td>
                     <td>
                         <div *ngIf="printOrder.document">
@@ -34,18 +38,64 @@
                     </td>
                     <td>
                         <div *ngIf="printOrder.employee">
-                            <a [routerLink]="['../employee', printOrder.employee?.id, 'view' ]">{{printOrder.employee?.firstName}}
-                                {{printOrder.employee?.lastName}}</a>
+                            <a [routerLink]="['../employee', printOrder.employee?.id, 'view' ]">{{printOrder.employee?.user.firstName}}
+                                {{printOrder.employee?.user.lastName}}</a>
+                        </div>
+                        <div *ngIf="!printOrder.employee && user.authorities.includes('ROLE_EMPLOYEE')">
+                            <button class="btn btn-outline-success" (click)='claimPrintOrder(printOrder.id)'>Claim</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="printOrder.teaching">
+                            <a>{{printOrder.teaching?.teacher.user.firstName}}
+                                {{printOrder.teaching?.teacher.user.firstName}}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="printOrder.teaching">
+                            <a>{{printOrder.teaching?.group.name}}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="printOrder.teaching">
+                            <a>{{printOrder.teaching?.group.studentsNumber}}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div *ngIf="printOrder.teaching">
+                            <a>{{printOrder.teaching?.subject.name}}</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div ngbDropdown class="d-inline-block"
+                            *ngIf="printOrder.status && printOrder.status != 'DONE' && user.authorities.includes('ROLE_EMPLOYEE') && printOrder.employee?.id === employee?.id">
+                            <button
+                                [ngClass]="{'btn': true,'dropdown-toggle':true,'btn-warning': printOrder.status === 'PENDING','btn-success': printOrder.status === 'DONE','btn-info': printOrder.status === 'INPROGRESS'}"
+                                type="button" id="dropdownMenuButton" ngbDropdownToggle>{{printOrder.status}}</button>
+                            <div ngbDropdownMenu>
+                                <button class="dropdown-item" type="button"
+                                    (click)="setPrintOrderState(printOrder.id,'INPROGRESS')">INPROGRESS</button>
+                                <button class="dropdown-item" type="button"
+                                    (click)="setPrintOrderState(printOrder.id,'DONE')">DONE</button>
+                            </div>
+                        </div>
+
+                        <div
+                            *ngIf="printOrder.status === 'DONE' ||(printOrder.status  && (user.authorities.includes('ROLE_TEACHER') || user.authorities.includes('ROLE_ADMIN'))) || printOrder.employee?.id !== employee?.id">
+                            <button type="button" class="btn"
+                                [ngClass]="{'btn-warning': printOrder.status === 'PENDING','btn-success': printOrder.status === 'DONE','btn-info': printOrder.status === 'INPROGRESS'}">
+                                {{printOrder.status}}
+                            </button>
                         </div>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
-                            <button type="submit" [routerLink]="['/print-order', printOrder.id, 'view' ]"
+                            <!--<button type="submit" [routerLink]="['/print-order', printOrder.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                                 <fa-icon [icon]="'eye'"></fa-icon>
                                 <span class="d-none d-md-inline">View</span>
                             </button>
-                            <button type="submit" [routerLink]="['/print-order', printOrder.id, 'edit']"
+                             <button type="submit" [routerLink]="['/print-order', printOrder.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                                 <fa-icon [icon]="'pencil-alt'"></fa-icon>
                                 <span class="d-none d-md-inline">Edit</span>
@@ -55,7 +105,7 @@
                                 replaceUrl="true" queryParamsHandling="merge" class="btn btn-danger btn-sm">
                                 <fa-icon [icon]="'times'"></fa-icon>
                                 <span class="d-none d-md-inline">Delete</span>
-                            </button>
+                            </button> -->
                         </div>
                     </td>
                 </tr>

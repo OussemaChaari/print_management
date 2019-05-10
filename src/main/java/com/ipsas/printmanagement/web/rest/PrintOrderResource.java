@@ -1,11 +1,17 @@
 package com.ipsas.printmanagement.web.rest;
+
+import com.ipsas.printmanagement.domain.Employee;
 import com.ipsas.printmanagement.domain.PrintOrder;
+import com.ipsas.printmanagement.domain.enumeration.Status;
+import com.ipsas.printmanagement.repository.EmployeeRepository;
+import com.ipsas.printmanagement.repository.PrintOrderRepository;
 import com.ipsas.printmanagement.service.PrintOrderService;
 import com.ipsas.printmanagement.web.rest.errors.BadRequestAlertException;
 import com.ipsas.printmanagement.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +19,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,23 +53,27 @@ public class PrintOrderResource {
         if (printOrder.getId() != null) {
             throw new BadRequestAlertException("A new printOrder cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        printOrder.setStatus(Status.PENDING);
+        printOrder.setCreationDate(Instant.now());
         PrintOrder result = printOrderService.save(printOrder);
         return ResponseEntity.created(new URI("/api/print-orders/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 
-    /**
-     * PUT  /print-orders : Updates an existing printOrder.
-     *
-     * @param printOrder the printOrder to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated printOrder,
-     * or with status 400 (Bad Request) if the printOrder is not valid,
-     * or with status 500 (Internal Server Error) if the printOrder couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+    @Autowired
+    PrintOrderRepository printOrderRepository;
+
+    @PutMapping("/print-orders/updateStatus")
+    public String updatePrintOrder(@RequestBody PrintOrder printOrder) {
+        PrintOrder oldPrintOrder = printOrderRepository.findPrintOrderById(printOrder.getId());
+        oldPrintOrder.setStatus(printOrder.getStatus());
+        printOrderRepository.save(oldPrintOrder);
+        return "success";
+    }
+
     @PutMapping("/print-orders")
-    public ResponseEntity<PrintOrder> updatePrintOrder(@Valid @RequestBody PrintOrder printOrder) throws URISyntaxException {
+    public ResponseEntity<PrintOrder> updatePrintOrderStatus(@Valid @RequestBody PrintOrder printOrder) {
         log.debug("REST request to update PrintOrder : {}", printOrder);
         if (printOrder.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -71,6 +82,20 @@ public class PrintOrderResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, printOrder.getId().toString()))
             .body(result);
+    }
+
+    @Autowired
+    EmployeeRepository employeeRepository;
+
+    @GetMapping("/print-orders/claim/{id}/{employeeId}")
+    public String updatePrintOrderStatus(@PathVariable Long id, @PathVariable Long employeeId) {
+        PrintOrder printOrder = printOrderRepository.findPrintOrderById(id);
+        Employee employee1 = employeeRepository.getOne(employeeId);
+        log.debug("employee1 : " + employeeId);
+        log.debug("printored " + printOrder.getId());
+        printOrder.setEmployee(employee1);
+        printOrderRepository.save(printOrder);
+        return "success";
     }
 
     /**

@@ -47,6 +47,24 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label class="form-control-label" for="field_group">Group</label>
+                    <select class="form-control" id="field_group" name="group" (change)="updateSubjects()" [(ngModel)]="chosenGroup">
+                        <option [ngValue]="null"></option>
+                        <option *ngFor="let group of groups" [value]="group.id">{{group.name}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_group">Subject</label>
+                    <select class="form-control" id="field_group" name="subject" [(ngModel)]="chosenSubject">
+                        <option [ngValue]="null"></option>
+                        <option *ngFor="let subject of subjects" [value]="subject.id">{{subject.name}}
+                        </option>
+                    </select>
+                </div>
+
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">

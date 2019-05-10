@@ -11,9 +11,12 @@ type EntityArrayResponseType = HttpResponse<IEmployee[]>;
 
 @Injectable({ providedIn: 'root' })
 export class EmployeeService {
+    findByUserId(id: number) {
+        return this.http.get(`${this.resourceUrl}/user/${id}`);
+    }
     public resourceUrl = SERVER_API_URL + 'api/employees';
 
-    constructor(protected http: HttpClient) {}
+    constructor(protected http: HttpClient) { }
 
     create(employee: IEmployee): Observable<EntityResponseType> {
         return this.http.post<IEmployee>(this.resourceUrl, employee, { observe: 'response' });

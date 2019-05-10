@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IDocument } from 'app/shared/model/document.model';
-import { cpus } from 'os';
 
 type EntityResponseType = HttpResponse<IDocument>;
 type EntityArrayResponseType = HttpResponse<IDocument[]>;

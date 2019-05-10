@@ -1,3 +1,7 @@
+import { SubjectService } from 'app/entities/subject/subject.service';
+import { ITeacher } from 'app/shared/model/teacher.model';
+import { AccountService, IUser } from 'app/core';
+import { TeacherService } from './../teacher/teacher.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
@@ -16,6 +20,8 @@ import { IEmployee } from 'app/shared/model/employee.model';
 import { EmployeeService } from 'app/entities/employee';
 import { AddDocumentModalComponent } from './add-document-modal/add-document-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { IGroup } from 'app/shared/model/group.model';
+import { ISubject } from 'app/shared/model/subject.model';
 
 @Component({
     selector: 'jhi-print-order-update',
@@ -32,6 +38,11 @@ export class PrintOrderUpdateComponent implements OnInit {
     employees: IEmployee[];
     creationDate: string;
     recievingDate: string;
+    chosenGroup: number;
+    chosenSubject: number;
+    groups = [];
+    subjects = [];
+    teacherId: number;
 
     constructor(
         protected jhiAlertService: JhiAlertService,
@@ -40,7 +51,10 @@ export class PrintOrderUpdateComponent implements OnInit {
         protected teachingService: TeachingService,
         protected employeeService: EmployeeService,
         protected activatedRoute: ActivatedRoute,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private teacherService: TeacherService,
+        private accountService: AccountService,
+        private subjectService: SubjectService
     ) { }
 
     ngOnInit() {
@@ -51,6 +65,16 @@ export class PrintOrderUpdateComponent implements OnInit {
             this.recievingDate = this.printOrder.recievingDate != null ? this.printOrder.recievingDate.format(DATE_TIME_FORMAT) : null;
         });
         this.fetchDocuments();
+        this.accountService.identity().then((user: IUser) => {
+            this.teacherService.findByUserId(user.id).subscribe((teacher: ITeacher) => {
+                this.teacherId = teacher.id;
+                console.log('teacher: ', teacher);
+                this.teachingService.findByTeacherId(teacher.id).subscribe((groups: IGroup[]) => {
+                    console.log('Teachings:', groups);
+                    this.groups = groups;
+                });
+            });
+        });
         this.teachingService
             .query()
             .pipe(
@@ -65,6 +89,12 @@ export class PrintOrderUpdateComponent implements OnInit {
                 map((response: HttpResponse<IEmployee[]>) => response.body)
             )
             .subscribe((res: IEmployee[]) => (this.employees = res), (res: HttpErrorResponse) => this.onError(res.message));
+    }
+
+    updateSubjects() {
+        this.subjectService.findByTeacherAndGroup(this.teacherId, this.chosenGroup).subscribe((subjects: ISubject[]) => {
+            this.subjects = subjects;
+        });
     }
 
     fetchDocuments() {
@@ -107,7 +137,10 @@ export class PrintOrderUpdateComponent implements OnInit {
         if (this.printOrder.id !== undefined) {
             this.subscribeToSaveResponse(this.printOrderService.update(this.printOrder));
         } else {
-            this.subscribeToSaveResponse(this.printOrderService.create(this.printOrder));
+            this.teachingService.findByTeacherGroupSubject(this.teacherId, this.chosenGroup, this.chosenSubject).subscribe(res => {
+                this.printOrder.teaching = res;
+                this.subscribeToSaveResponse(this.printOrderService.create(this.printOrder));
+            })
         }
     }
 

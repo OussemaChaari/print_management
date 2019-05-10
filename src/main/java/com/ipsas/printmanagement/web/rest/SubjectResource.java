@@ -1,17 +1,23 @@
 package com.ipsas.printmanagement.web.rest;
 import com.ipsas.printmanagement.domain.Subject;
+import com.ipsas.printmanagement.domain.Teaching;
+import com.ipsas.printmanagement.repository.SubjectRepository;
+import com.ipsas.printmanagement.repository.TeachingRepository;
 import com.ipsas.printmanagement.service.SubjectService;
 import com.ipsas.printmanagement.web.rest.errors.BadRequestAlertException;
 import com.ipsas.printmanagement.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.ws.Response;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +55,18 @@ public class SubjectResource {
         return ResponseEntity.created(new URI("/api/subjects/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
+    }
+
+    @Autowired
+    TeachingRepository teachingRepository;
+
+    @Autowired
+    SubjectRepository subjectRepository;
+
+    @GetMapping("/subjects/{teacherId}/{groupId}")
+    public List<Subject> getSubjectsByTeacherAndGroup(@PathVariable("teacherId") Long teacherId,@PathVariable("groupId") long groupId){
+        List<Subject> subjects= teachingRepository.getByTeacherIdAndGroupId(teacherId,groupId);
+        return subjects;
     }
 
     /**

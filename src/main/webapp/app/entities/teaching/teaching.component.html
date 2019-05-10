@@ -26,17 +26,17 @@
                 <td><a [routerLink]="['/teaching', teaching.id, 'view' ]">{{teaching.id}}</a></td>
                 <td>
                     <div *ngIf="teaching.subject">
-                        <a [routerLink]="['../subject', teaching.subject?.id, 'view' ]" >{{teaching.subject?.id}}</a>
+                        <a [routerLink]="['../subject', teaching.subject?.id, 'view' ]" >{{teaching.subject?.name}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="teaching.teacher">
-                        <a [routerLink]="['../teacher', teaching.teacher?.id, 'view' ]" >{{teaching.teacher?.id}}</a>
+                        <a [routerLink]="['../teacher', teaching.teacher?.id, 'view' ]" >{{teaching.teacher?.user.firstName}} {{teaching.teacher?.user.lastName}}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="teaching.group">
-                        <a [routerLink]="['../group', teaching.group?.id, 'view' ]" >{{teaching.group?.id}}</a>
+                        <a [routerLink]="['../group', teaching.group?.id, 'view' ]" >{{teaching.group?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

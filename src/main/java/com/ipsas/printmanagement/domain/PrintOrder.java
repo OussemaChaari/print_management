@@ -25,7 +25,6 @@ public class PrintOrder implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
     @Column(name = "creation_date", nullable = false)
     private Instant creationDate;
 
@@ -33,7 +32,6 @@ public class PrintOrder implements Serializable {
     @Column(name = "recieving_date", nullable = false)
     private Instant recievingDate;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
